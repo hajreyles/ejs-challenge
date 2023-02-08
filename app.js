@@ -17,21 +17,21 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(express.static("public"));
 
-let postArray = [];
+let postsArray = [];
 
 // Calling EJS file to render.
 app.get("/", function (req, res) {
 
   let referer = req.headers.referer;
   let isComingFromCompose = false;
-  if (referer.includes("/compose")){
+  if (referer && referer.includes("/compose")){
     isComingFromCompose = true;
   }
 
   res.render("home", {
     homeCont: homeStartingContent,
-    posts: postArray,
-    showAlert: isComingFromCompose,
+    posts: postsArray,
+    showAlert: isComingFromCompose
   });
 });
 
@@ -53,27 +53,33 @@ app.get("/compose", function (req, res) {
 
 app.post("/compose", function (req, res) {
   let postTitle = req.body.postTitle;
-  let postBody = req.body.postBody
+  let postBody = req.body.postBody;
 
   const post = {
     title: postTitle,
     content: postBody
   }
-  postArray.push(post)
-
+  postsArray.push(post);
   res.redirect("/");
-
-
 });
 
+app.get("/posts/:postId", function(req, res) {
+  let postName = req.params.postId;
+  // Searching if post exists
+  let post = getPost(postsArray, postName);
+  // check if post found
+  if (post != undefined){
+    console.log("match found", post);
+  }
+  else {
+    console.log("doesnt exist");
+  }
+});
 
-
-
-
-
-
-
-
+// Search for post
+function getPost(postsArray, postId) {
+  return postsArray.find(x => x.title === postId);
+}
 
 app.listen(3000, function () {
   console.log("Server started on port 3000");

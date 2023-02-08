@@ -3,7 +3,7 @@
 <p><%= homeCont %></p>
 
 <% for (let i = 0; i < posts.length; i++) {  %>
-<div class="card mb-3" style="width: 18rem;">
+<div class="card mb-3" style="width: 100%;">
     <div class="card-body">
         <h5 class="card-title"><%= posts[i].title %></h5>
         <p class="card-text"><%= posts[i].content %></p>
@@ -11,13 +11,16 @@
 </div>
 <% } %>
 
-
 <% if (showAlert) {  %>
 
-<div class="alert alert-success alert-dismissible fade show" role="alert">
+   
+
+<div class="alert alert-success alert-dismissible fade show bottom" role="alert">
+    <i class="bi-check-circle-fill"></i>
     <strong>Karaosmanoglu ailesi!</strong> yeni uyelerini bekliyooor.
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
+
 
 <% } %>
 
